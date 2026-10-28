@@ -12,6 +12,7 @@ shift $(( $# < 4 ? $# : 4 ))
 extra=("$@")
 
 cd "$(git rev-parse --show-toplevel)" || exit 1
+touch "$log"
 common=(-m gpt-6.1-sol -c 'model_reasoning_effort="ultra"' -c "sandbox_mode=\"$sandbox\""
         -c features.plugins=false -c features.apps=false -c 'mcp_servers={}'
         --skip-git-repo-check -o "$out")

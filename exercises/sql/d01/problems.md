@@ -1,6 +1,6 @@
-# Day 01｜SQL：从筛选一行到汇总一组
+# D01｜SQL：单表查询、排序、聚合与 NULL
 
-所有数据均为合成数据。本页有 5 道示范、20 道小表练习、5 道大表业务题。按主题依次完成；练习先自己写，示范可以运行和修改。作答填在同目录 `answers.sql`，不要改数据库中的数据。
+所有数据均为合成数据。本页有 3 道示范、12 道小表练习、3 道大表业务题。按主题依次完成；练习先自己写，示范可以运行和修改。作答填在同目录 `answers.sql`，不要改数据库中的数据。
 
 ## 使用环境与数据约定
 
@@ -85,11 +85,28 @@ WHERE status = 'paid' AND amount >= 100;
 
 `IN ('北京', '深圳')` 表示属于列出的值；`BETWEEN 100 AND 200` 两端都包含。`LIKE '小%'` 中 `%` 代表任意长度（含零个）的字符，`_` 代表一个字符。缺失值用 `IS NULL` 或 `IS NOT NULL` 判断，不能用 `= NULL`。**方言说明：LIKE 的大小写行为受引擎、排序规则和配置影响；SQLite 默认对 ASCII 大小写不敏感，不推广到全部字符或 MySQL/Hive。本页中文前缀题不依赖大小写差异。**
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | city | order_amount |
+| --- | --- | --- |
+| 101 | 上海 | 100 |
+| 102 | 北京 | 200 |
+| 104 | 深圳 | 100 |
+| 105 | NULL | 150 |
+| 110 | 深圳 | 200 |
+
 ### 1.2 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 返回“上海且已支付”的订单，以及所有已退款订单。输出 `order_id, city, amount, status`，不要求行序。
+
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | city | amount | status |
+| --- | --- | --- | --- |
+| 101 | 上海 | 100 | paid |
+| 108 | 上海 | 300 | refunded |
 
 ### 1.3 小表练习
 
@@ -97,17 +114,47 @@ WHERE status = 'paid' AND amount >= 100;
 
 返回城市属于北京或深圳、且状态为 `paid` 的订单。输出 `order_id, user_id, city`，不要求行序。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | user_id | city |
+| --- | --- | --- |
+| 102 | 2 | 北京 |
+| 104 | 3 | 深圳 |
+| 110 | 8 | 深圳 |
+| 112 | 99 | 北京 |
+
 ### 1.4 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 返回金额在 100 至 200 元之间（含两端）、且订单日期在 2026-10-02 至 2026-10-06 之间（含两端）的订单。输出 `order_id, amount, order_date`，不要求行序。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | amount | order_date |
+| --- | --- | --- |
+| 104 | 100 | 2026-10-03 |
+| 105 | 150 | 2026-10-03 |
+| 110 | 200 | 2026-10-06 |
+| 111 | 100 | 2026-10-06 |
+
 ### 1.5 小表练习
 
 表：`s_users(user_id, name, city, channel)`。
 
 返回姓名以“小”开头、或者城市缺失的用户。输出 `user_id, name, city`，不要求行序。
+
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| user_id | name | city |
+| --- | --- | --- |
+| 1 | 小林 | 上海 |
+| 2 | 小周 | 北京 |
+| 4 | 阿雨 | NULL |
+| 6 | 小陈 | 上海 |
+| 8 | 小苏 | 深圳 |
+| 9 | 小方 | 北京 |
+| 10 | 小禾 | 成都 |
 
 ### 1.6 大表业务题
 
@@ -135,11 +182,28 @@ LIMIT 4;
 
 **方言说明：SQLite、MySQL 与 Hive 都有 LIMIT，但 Hive 的 ORDER BY 是全局排序，SORT BY 只保证每个 reducer 内有序，不能替换；部分 Hive 严格模式要求 ORDER BY 配合 LIMIT。本课查询不需要 SORT BY。SQLite 默认升序时 NULL 在前、降序时在后；跨方言不依赖默认 NULL 排序，后续可用 CASE 明确次序。**DISTINCT 输出中的多个 NULL 在去重时视为相同，这与 `NULL = NULL` 的比较结果不同。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | amount |
+| --- | --- |
+| 108 | 300 |
+| 102 | 200 |
+| 110 | 200 |
+| 105 | 150 |
+
 ### 2.2 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 返回金额已知的订单中最便宜的三笔，金额升序、同金额按订单号升序。输出 `order_id, amount`。
+
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | amount |
+| --- | --- |
+| 107 | 0 |
+| 103 | 50 |
+| 112 | 50 |
 
 ### 2.3 小表练习
 
@@ -147,17 +211,52 @@ LIMIT 4;
 
 返回订单表出现过的不同城市，只输出 `city`；缺失城市保留一行，不要求行序。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| city |
+| --- |
+| 上海 |
+| 北京 |
+| 深圳 |
+| NULL |
+| 杭州 |
+| 武汉 |
+
 ### 2.4 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 返回不同的“用户、订单城市”组合，输出 `user_id, city`，按用户号升序。不要把重复下单算成新的组合。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| user_id | city |
+| --- | --- |
+| 1 | 上海 |
+| 2 | 北京 |
+| 3 | 深圳 |
+| 4 | NULL |
+| 5 | 杭州 |
+| 6 | 上海 |
+| 7 | 武汉 |
+| 8 | 深圳 |
+| 9 | NULL |
+| 99 | 北京 |
+
 ### 2.5 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 返回最近四笔 `paid` 订单，按订单日期降序，同日按订单号降序。输出 `order_id, order_date, amount`。
+
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_id | order_date | amount |
+| --- | --- | --- |
+| 112 | 2026-10-07 | 50 |
+| 110 | 2026-10-06 | 200 |
+| 109 | 2026-10-05 | NULL |
+| 107 | 2026-10-04 | 0 |
 
 ### 2.6 大表业务题
 
@@ -190,11 +289,23 @@ FROM s_orders;
 
 **方言说明：这些单列计数及 NULL 规则适用于本课 SQLite、MySQL、Hive；SUM/AVG 的返回数值类型与精度可能不同。SQLite 的 TOTAL() 是本地扩展且空输入返回 0，本课不用它替代 SUM。**均值核对时允许最后几位小数的表示差异，不先把 NULL 改为零。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_count | known_amount_count | user_count | total_amount | avg_amount | known_city_count | city_count |
+| --- | --- | --- | --- | --- | --- | --- |
+| 12 | 10 | 10 | 1250 | 125.0 | 10 | 5 |
+
 ### 3.2 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 仅统计 `paid` 订单。返回一行：`order_count`（总笔数）、`known_amount_count`（金额已知笔数）、`city_count`（不同的已知城市数）。
+
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_count | known_amount_count | city_count |
+| --- | --- | --- |
+| 8 | 7 | 5 |
 
 ### 3.3 小表练习
 
@@ -202,11 +313,23 @@ FROM s_orders;
 
 统计上海订单的金额合计和已知金额均值，输出一行 `total_amount, avg_amount`。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| total_amount | avg_amount |
+| --- | --- |
+| 450 | 150.0 |
+
 ### 3.4 小表练习
 
 表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
 
 只统计城市为成都的订单，输出一行：总笔数 `order_count`、金额已知笔数 `known_amount_count`、金额合计 `total_amount`、已知金额均值 `avg_amount`。保留数据库对缺失汇总值的原始表达。
+
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_count | known_amount_count | total_amount | avg_amount |
+| --- | --- | --- | --- |
+| 0 | 0 | NULL | NULL |
 
 ### 3.5 小表练习
 
@@ -214,118 +337,17 @@ FROM s_orders;
 
 只统计金额缺失的订单，输出一行：总笔数 `order_count`、金额已知笔数 `known_amount_count`、不同已知金额数 `amount_count`、金额合计 `total_amount`、已知金额均值 `avg_amount`。
 
+预期结果（NULL 表示缺失；题目未要求排序时行序不限）：
+
+| order_count | known_amount_count | amount_count | total_amount | avg_amount |
+| --- | --- | --- | --- | --- |
+| 2 | 0 | 0 | NULL | NULL |
+
 ### 3.6 大表业务题
 
 表：`orders(order_id, user_id, order_time, amount, status, channel)`。
 
 统计 2026-10-01 零点起至 2026-10-28 零点前的 `paid` 订单，输出一行：总笔数 `order_count`、金额已知笔数 `known_amount_count`、不同下单用户数 `user_count`、已知金额合计 `total_amount`、已知金额均值 `avg_amount`。
-
-## ④ GROUP BY / HAVING 与逻辑执行顺序
-
-### 4.1 示范｜已支付订单至少两笔的城市
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-需求：先限定 `paid` 订单，按订单城市统计，只留下至少两笔的城市。输出 `city, order_count, total_amount`，按城市升序。
-
-```sql
-SELECT city, COUNT(*) AS order_count, SUM(amount) AS total_amount
-FROM s_orders
-WHERE status = 'paid'
-GROUP BY city
-HAVING COUNT(*) >= 2
-ORDER BY city ASC;
-```
-
-为什么：WHERE 筛的是原始订单行；GROUP BY 把留下的行按城市分组；COUNT 和 SUM 在各组内计算；HAVING 再筛组。把 `status = 'paid'` 放到 WHERE，可以让取消、退款等订单从一开始就不参加计数。`COUNT(*) >= 2` 是整组性质，不能直接写在同层 WHERE。若先不筛状态，其他状态订单就会改变城市组的笔数。
-
-理解本日查询的逻辑顺序：`FROM → WHERE → GROUP BY/聚合 → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT`。这是结果语义的学习模型；优化器可以合并、提前或改写实际操作，不代表固定物理执行顺序。没有写某个子句，就跳过相应步骤。GROUP BY 会把同一个分组键的 NULL 放在一组；该组内 COUNT(*) 仍数行，SUM 仍忽略金额 NULL。
-
-**方言说明：分组查询只输出分组列或聚合表达式；不要利用 SQLite 允许某些未分组“裸列”的宽松行为。MySQL 的 ONLY_FULL_GROUP_BY 和 Hive 对这类写法有约束。HAVING 直接写聚合表达式，避免依赖别名解析差异。**本例不用 SELECT 别名作为 HAVING 条件。
-
-### 4.2 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-按下单用户统计全部状态订单，只返回至少下过两笔订单的用户。输出 `user_id, order_count`，按用户号升序。
-
-### 4.3 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-先限定 `paid` 订单，再按订单城市统计，保留已知金额合计至少 200 元的城市。输出 `city, order_count, total_amount`，按合计金额降序，同金额按城市升序。
-
-### 4.4 小表练习
-
-表：`s_users(user_id, name, city, channel)`。
-
-按注册渠道统计用户数，只保留至少两名用户的渠道。输出 `channel, user_count`，按用户数降序，同数量按渠道升序。缺失渠道作为一个分组参与统计。
-
-### 4.5 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-只统计 2026-10-03 至 2026-10-07（含两端）的订单，按状态分组，仅保留至少有两笔金额已知订单的状态。输出 `status, order_count, known_amount_count, avg_amount`，按状态升序。
-
-### 4.6 大表业务题
-
-表：`orders(order_id, user_id, order_time, amount, status, channel)`。
-
-统计 2026-10-01 零点起至 2026-10-28 零点前的 `paid` 订单，按订单渠道分组（缺失渠道也成组），只保留已知金额合计至少 50000 元的渠道。输出 `channel, order_count, total_amount`，按合计金额降序；同金额按渠道升序，并列时缺失渠道在非缺失渠道前。
-
-## ⑤ CASE WHEN 与 NULL 语义
-
-### 5.1 示范｜按金额标记订单
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-需求：输出所有订单的 `order_id, amount, amount_band`。金额缺失标“金额缺失”，至少 200 元标“高额”，其余标“普通”，按订单号升序。
-
-```sql
-SELECT order_id, amount,
-       CASE WHEN amount IS NULL THEN '金额缺失'
-            WHEN amount >= 200 THEN '高额'
-            ELSE '普通'
-       END AS amount_band
-FROM s_orders
-ORDER BY order_id ASC;
-```
-
-为什么：CASE 是产生一个值的表达式，不会自动删行。它从上往下选择第一个为真的 WHEN 分支；后面即使也为真，不会再覆盖。金额 NULL 的比较（如 `>= 200`）是未知，不会命中，因此这里先明确标记缺失。没有 ELSE 且没有命中时，结果是 NULL。文字结果用单引号，别名不加单引号。
-
-SQL 的比较有真、假、未知三种结果：`NULL = 0`、`NULL <> 0`、`NULL = NULL` 都是未知，WHERE 只保留真；`IS NULL` 才是在判断缺失。`NOT 未知` 仍是未知；`假 AND 未知` 为假，`真 OR 未知` 为真，其余与未知组合不一定能得到真或假。简单 CASE 的 `CASE amount WHEN NULL ...` 也不是检查 NULL，因为它做的是相等比较。CASE 表达式可以放在 SUM 等聚合函数里面；也可以在 GROUP BY 中完整重写同一个 CASE 表达式，按分类结果分组。聚合 CASE 产生的数值可将逐行分类与汇总结合；数字 `0` 是数值，NULL 是缺失，计数口径不能互换。
-
-**方言说明：本课带条件的 CASE WHEN 及三值逻辑适用于 SQLite、MySQL、Hive。各分支统一返回文本或统一返回数值，避免 SQLite 的宽松类型掩盖 MySQL/Hive 的类型归并差异。Hive 与 MySQL 的专有条件函数不作为本课答案。**
-
-### 5.2 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-仅返回 `paid` 订单的 `order_id, amount, amount_state`：金额缺失标“金额缺失”，金额等于零标“零金额”，其余标“正金额”。按订单号升序。
-
-### 5.3 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-返回订单号为 105、106、109、111 的 `order_id, city_label`：城市缺失标“未填写”，否则使用订单原城市。按订单号升序。
-
-### 5.4 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-返回所有订单的 `order_id, amount_band`：金额缺失标“未知”，不足 100 元标“低额”，至少 100 且不足 200 元标“中额”，至少 200 元标“高额”。按订单号升序。
-
-### 5.5 小表练习
-
-表：`s_orders(order_id, user_id, city, amount, order_date, status)`。
-
-统计全部订单，只返回一行三列：金额缺失订单数 `missing_count`、金额至少 100 元的订单数 `at_least_100_count`、金额不足 100 元的订单数 `below_100_count`。缺失金额不计入后两类。
-
-### 5.6 大表业务题
-
-表：`orders(order_id, user_id, order_time, amount, status, channel)`。
-
-对全部订单生成业务状态：“成交”包括 `paid` 与 `completed`，“退款”包括 `refunded`，其余为“其他”。按业务状态汇总，输出 `business_status, order_count, known_amount_count, total_amount`；合计只计算已知金额。按总笔数降序，同笔数按业务状态升序。
 
 ## 语义核对来源
 

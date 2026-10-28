@@ -53,6 +53,16 @@ SMALL_ORDERS = [
     (111, 9, None, 100, "2026-10-06", "cancelled"),
     (112, 99, "北京", 50, "2026-10-07", "paid"),
 ]
+# JOIN exercises: repeated order_id values are intentional at item grain.
+# Order 110 deliberately has no detail; order 107 contains a free item.
+SMALL_PRODUCTS = [(201, "杯子", "日用"), (202, "贴纸", "文具"), (203, "袋子", "日用")]
+SMALL_ORDER_ITEMS = [
+    (101, 201, 1, 50), (101, 202, 2, 25),
+    (102, 203, 2, 100), (103, 201, 1, 50), (104, 202, 4, 25),
+    (105, 201, 1, 50), (105, 203, 1, 100), (106, 202, 1, 25),
+    (107, 202, 1, 0), (108, 203, 3, 100), (109, 201, 2, 50),
+    (111, 203, 1, 100), (112, 201, 1, 50),
+]
 
 SCHEMA = """
 CREATE TABLE s_users (
@@ -69,6 +79,18 @@ CREATE TABLE s_orders (
     amount INTEGER CHECK (amount >= 0),
     order_date TEXT NOT NULL,
     status TEXT NOT NULL
+);
+CREATE TABLE s_products (
+    product_id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    category TEXT NOT NULL
+);
+CREATE TABLE s_order_items (
+    order_id INTEGER NOT NULL REFERENCES s_orders(order_id),
+    product_id INTEGER NOT NULL REFERENCES s_products(product_id),
+    qty INTEGER NOT NULL CHECK (qty > 0),
+    price INTEGER NOT NULL CHECK (price >= 0),
+    PRIMARY KEY (order_id, product_id)
 );
 CREATE TABLE users (
     user_id INTEGER PRIMARY KEY,
@@ -130,6 +152,8 @@ def insert_data(conn):
     conn.executemany(
         "INSERT INTO s_orders VALUES (?, ?, ?, ?, ?, ?)", SMALL_ORDERS
     )
+    conn.executemany("INSERT INTO s_products VALUES (?, ?, ?)", SMALL_PRODUCTS)
+    conn.executemany("INSERT INTO s_order_items VALUES (?, ?, ?, ?)", SMALL_ORDER_ITEMS)
 
     cities = ["上海", "北京", "深圳", "杭州", "广州", "成都", "武汉", "南京"]
     channels = ["app", "web", "wechat"]
@@ -227,18 +251,30 @@ def validate(conn):
     expected = {
         "s_orders": 12,
         "s_users": 10,
+        "s_products": 3,
+        "s_order_items": 13,
         "users": USER_COUNT,
         "orders": ORDER_COUNT,
         "products": PRODUCT_COUNT,
         "logins": LOGIN_COUNT,
     }
     counts = {}
-    for table in ["s_orders", "s_users", "users", "orders", "products", "order_items", "logins"]:
+    for table in ["s_orders", "s_users", "s_products", "s_order_items", "users", "orders", "products", "order_items", "logins"]:
         counts[table] = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
     for table, count in expected.items():
         assert counts[table] == count, (table, counts[table], count)
     assert conn.execute("PRAGMA integrity_check").fetchone() == ("ok",)
     assert not conn.execute("PRAGMA foreign_key_check").fetchall()
+    assert conn.execute("""
+        SELECT order_id FROM s_orders AS o
+        WHERE NOT EXISTS (SELECT 1 FROM s_order_items AS i WHERE i.order_id = o.order_id)
+    """).fetchall() == [(110,)]
+    assert conn.execute("""
+        SELECT o.order_id FROM s_orders AS o
+        JOIN s_order_items AS i ON i.order_id = o.order_id
+        WHERE o.amount IS NOT NULL GROUP BY o.order_id, o.amount
+        HAVING SUM(i.qty * i.price) <> o.amount
+    """).fetchall() == []
     mismatches = conn.execute("""
         SELECT COUNT(*) FROM orders AS o
         JOIN (SELECT order_id, SUM(qty * price) AS total

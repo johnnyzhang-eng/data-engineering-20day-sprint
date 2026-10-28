@@ -20,9 +20,9 @@ continue_msg="${CONTINUE_MSG:-上次因模型满载中断。请从中断处继�
 
 attempt() {  # $1 = 会话 id，空则新开会话
   if [ -z "$1" ]; then
-    "$CX" exec "${common[@]}" "${extra[@]}" - < "$req" >> "$log" 2>&1
+    "$CX" exec "${common[@]}" ${extra[@]+"${extra[@]}"} - < "$req" >> "$log" 2>&1
   else
-    "$CX" exec resume "$1" "${common[@]}" "${extra[@]}" "$continue_msg" >> "$log" 2>&1
+    "$CX" exec resume "$1" "${common[@]}" ${extra[@]+"${extra[@]}"} "$continue_msg" >> "$log" 2>&1
   fi
 }
 

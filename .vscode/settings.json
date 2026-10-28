@@ -1,0 +1,14 @@
+{
+  "files.exclude": {
+    "private/rubrics": true,
+    "private/answer-keys": true,
+    "private/quizzes": true,
+    "private/tasks": true
+  },
+  "search.exclude": {
+    "private/rubrics": true,
+    "private/answer-keys": true,
+    "private/quizzes": true,
+    "private/tasks": true
+  }
+}

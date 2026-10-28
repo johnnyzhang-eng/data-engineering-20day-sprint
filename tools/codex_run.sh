@@ -27,7 +27,7 @@ attempt() {  # $1 = 会话 id，空则新开会话
 
 sid="${RESUME_SID:-}"
 for wait in 0 60 120 240 480; do
-  [ "$wait" -gt 0 ] && { echo "[codex_run] 模型满载，${wait} 秒后续跑会话 $sid" >> "$log"; sleep "$wait"; }
+  [ "$wait" -gt 0 ] && { echo "[codex_run] 模型满载，${wait} 秒后续跑会话 ${sid}" >> "$log"; sleep "$wait"; }
   before=$(wc -c < "$log" 2>/dev/null || echo 0)
   attempt "$sid"; code=$?
   new=$(tail -c +"$((before + 1))" "$log")
@@ -36,8 +36,8 @@ for wait in 0 60 120 240 480; do
     [ -n "$sid" ] && continue
     echo "[codex_run] 满载且没拿到会话 id，停止" >> "$log"; exit 2
   fi
-  echo "[codex_run] 结束，exit=$code，session=$sid" >> "$log"
+  echo "[codex_run] 结束，exit=${code}，session=${sid}" >> "$log"
   exit "$code"
 done
-echo "[codex_run] 连续满载，已重试 4 次，停止。session=$sid" >> "$log"
+echo "[codex_run] 连续满载，已重试 4 次，停止。session=${sid}" >> "$log"
 exit 3

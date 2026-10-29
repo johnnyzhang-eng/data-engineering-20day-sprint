@@ -210,5 +210,5 @@
 - [x] 逐岗资格表：20 份岗位（实习与校招），公开汇总见 [`research/targets-summary.md`](../research/targets-summary.md)
 - [x] 第 1–3 天的 SQL 练习材料、练习数据库、复测工具 `tools/progress.py`
 - [x] 列出全部学习任务（本文件）
-- [ ] M3 数仓建模讲义（第 2–6 天下午用）
+- [x] M3 数仓建模讲义（[`docs/notes/`](notes/)，第 2–6 天下午用）
 - [ ] 第 4 天起的材料按滚动方式，提前 2–3 天生成

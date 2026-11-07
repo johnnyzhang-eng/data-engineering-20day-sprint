@@ -1,0 +1,20 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 johnnyzhang-eng
+
+Unless otherwise stated, the original written materials in this repository,
+including lecture notes, exercise statements, and learning records, are
+licensed under the Creative Commons Attribution 4.0 International License.
+
+To view a copy of this license, visit:
+https://creativecommons.org/licenses/by/4.0/
+
+When sharing or adapting these materials, give appropriate credit to
+johnnyzhang-eng, link to the source repository and the license, and indicate
+if changes were made.
+
+Source repository: https://github.com/johnnyzhang-eng/data-engineering-20day-sprint
+
+Code, including tools/ and the .py and .sql files under exercises/ (such as
+exercises/sql/data/build_db.py), is covered by the MIT License in LICENSE.
+Third-party materials retain their respective licenses and attribution.

@@ -29,6 +29,8 @@
 
 从固定数据练“算对”，再练变化和故障下的“还能算对”。分层设计、任务重试、数据质量和交接需要不同证据。公共课程参考 [Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp) 的摄取、编排、仓库和项目模块，以及 [Apache Airflow 关于重跑的实践](https://airflow.apache.org/docs/apache-airflow/stable/best-practices.html#creating-a-task)。
 
+关于外部课程如何复用、还要自建什么，见 [Zoomcamp 对照](zoomcamp-fit.md)。
+
 ## 怎么进行一轮陪练
 
 左边用 Kimi 讲机制、抛问题和给分级提示，右边在 VS Code 自己读题、写 SQL 或 Python、运行并看结果。先预测再实跑，然后把必要的题面和结果给陪练核对。聊天里的一句“正确”是反馈，独立预期和实际结果是验收证据。工程项目涉及的私人原文留在授权的本地范围。

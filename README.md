@@ -45,6 +45,8 @@ Code (`tools/`, and `.py` / `.sql` files under `exercises/`) is under the [MIT L
 |---|---|
 | [`docs/syllabus.md`](docs/syllabus.md) | 学习任务清单（13 个模块） |
 | [`docs/learning-path.md`](docs/learning-path.md) | 每天怎样学、练、测、记 |
+| [学习地图](docs/knowledge-map/README.md) | 数据工程、计算机基础、AI 技术演进与开发验收 |
+| [地图建设任务书](docs/knowledge-map/project-plan.md) | 可认领工单、依赖和验收 |
 | [`docs/how-to-use.md`](docs/how-to-use.md) | 别人怎样用这些材料自学 |
 | `docs/days/` | 每天的目标与练习范围 |
 | `daily/` | 每日记录 |

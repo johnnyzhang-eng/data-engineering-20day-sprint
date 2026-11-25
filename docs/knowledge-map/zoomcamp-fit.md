@@ -26,3 +26,9 @@
 [官方课程 README](https://github.com/DataTalksClub/data-engineering-zoomcamp#how-to-take-the-course)列下一期为 **2027 年 1 月**。截至本次核对，[正式报名页](https://courses.datatalks.club/register/de-zoomcamp/)说明会在新一届宣布时通知，[2027 届课程目录](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/813d2774083186d0c9705c920deaf3e6e1693335/cohorts/2027/README.md)也将日程和作业标为草稿。[开发环境](https://dev.courses.datatalks.club/)出现的 1 月 18 日可作为待核线索，正式日期听主办方公布。
 
 公开课程可随时自学。想要有截止日期的作业、同伴评审和证书机会，可以参加 cohort。课程视频为录播。同伴评审和证书规则以当期正式说明为准。建议现在继续 SQL/Python 与本地项目基础，开课后再根据投入时间决定是否参加完整 cohort。
+
+## 逐章核对与个人中文化记录
+
+已按固定提交 813d277 核对七模块的 88 个单元，各章的目录和项目原文仍作课程基准。个人中文索引、可离线阅读的配套导读与第一节自编 SQL 练习保留在本地。课程汉化并未全部完成。
+
+主课已有 AI 内容：[Kestra 编排中的上下文工程、Copilot 与 RAG](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/813d2774083186d0c9705c920deaf3e6e1693335/02-workflow-orchestration/README.md#25-using-ai-for-data-engineering-in-kestra)、[Bruin MCP 与 agent](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/813d2774083186d0c9705c920deaf3e6e1693335/05-data-platforms/04-bruin-mcp.md)，以及 [dlt 摄取 workshop](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/813d2774083186d0c9705c920deaf3e6e1693335/cohorts/2026/workshops/dlt.md)。这些可直接复用。完整补课分为 AI 历史与模型原理、独立构建与评估 LLM 应用、验证 AI 辅助开发三个问题。应用参考 [LLM Zoomcamp](https://github.com/DataTalksClub/llm-zoomcamp)，开发流程参考 [AI Dev Tools Zoomcamp](https://github.com/DataTalksClub/ai-dev-tools-zoomcamp)。

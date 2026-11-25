@@ -2,7 +2,7 @@
 
 这张地图从数据开发、数仓和数据工程的工作任务出发，连接计算机基础、AI 技术演进和可靠的软件开发。用它看全貌、找先修知识、选学习材料。用于面试准备的日程见 [Sprint 大纲](../syllabus.md)。
 
-[建设任务书](project-plan.md) · [建设回执](verification-log.md)
+[零基础学习流程图](beginner-flow.md) · [建设任务书](project-plan.md) · [建设回执](verification-log.md)
 
 ## 四条路径
 

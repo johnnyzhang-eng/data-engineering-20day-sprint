@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 816" role="img" aria-labelledby="title description" lang="zh-CN">
+  <title id="title">从零学数据工程</title>
+  <desc id="description">左列六步学习路线从订单全景到面试，右列是地图建设九项工单。早期挑战如发现系统性漏项则回到岗位映射。底部是计算机基础、AI 史与可靠用模，可穿插学习。</desc>
+  <defs>
+    <marker id="down" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M1 1l6 3-6 3" fill="none" stroke="#526272" stroke-width="1.4"/>
+    </marker>
+    <marker id="back" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M1 1l6 3-6 3" fill="none" stroke="#9c541f" stroke-width="1.4"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; fill: #172733 }
+    .heading { font-weight: 650; font-size: 34px }
+    .lane { font-weight: 650; font-size: 23px }
+    .name { font-weight: 650; font-size: 20px }
+    .detail { font-size: 16px; fill: #3c4e5d }
+    .left-name { fill: #115355 }
+    .right-name { fill: #704325 }
+    .edge { stroke: #526272; stroke-width: 1.5; fill: none; marker-end: url(#down) }
+  </style>
+  <rect width="1160" height="816" fill="#fffdf9"/>
+  <text x="44" y="62" class="heading">从零学数据工程</text>
+  <path d="M44 84H1116" stroke="#c7cdd0"/>
+  <text x="44" y="123" class="lane left-name">学习路线</text>
+  <text x="610" y="123" class="lane right-name">地图建设工单</text>
+  <text x="610" y="149" class="detail">方案阶段 · 工单待启动</text>
+  <rect x="44" y="174" width="506" height="68" rx="8" fill="#eef7f4" stroke="#8bb6ad"/>
+  <text x="62" y="201" class="name">从一笔订单看全貌</text>
+  <text x="62" y="225" class="detail">看 CS50 第 0 讲 · 读数据工程全景</text>
+  <path d="M297 242v17" class="edge"/>
+  <rect x="44" y="261" width="506" height="68" rx="8" fill="#eef7f4" stroke="#8bb6ad"/>
+  <text x="62" y="288" class="name">先会单表 SQL</text>
+  <text x="62" y="312" class="detail">CS50 SQL Querying · 实跑 Sprint D1 和 D2</text>
+  <path d="M297 329v17" class="edge"/>
+  <rect x="44" y="348" width="506" height="68" rx="8" fill="#eef7f4" stroke="#8bb6ad"/>
+  <text x="62" y="375" class="name">学 JOIN、建表与数据粒度</text>
+  <text x="62" y="399" class="detail">CS50 SQL Relating · D3 · 实跑订单反例</text>
+  <path d="M297 416v17" class="edge"/>
+  <rect x="44" y="435" width="506" height="68" rx="8" fill="#eef7f4" stroke="#8bb6ad"/>
+  <text x="62" y="462" class="name">让 Python 处理一份文件</text>
+  <text x="62" y="486" class="detail">Sprint Python p01 · 补基本语法 · CS50P 文件读写</text>
+  <path d="M297 503v17" class="edge"/>
+  <rect x="44" y="522" width="506" height="68" rx="8" fill="#eef7f4" stroke="#8bb6ad"/>
+  <text x="62" y="549" class="name">做一条可以重跑的管道</text>
+  <text x="62" y="573" class="detail">数仓分层 · 数据质量 · 幂等讲义 · 项目小样待补</text>
+  <path d="M297 590v17" class="edge"/>
+  <rect x="44" y="609" width="506" height="68" rx="8" fill="#eef7f4" stroke="#8bb6ad"/>
+  <text x="62" y="636" class="name">按目标岗位练项目与面试</text>
+  <text x="62" y="660" class="detail">岗位原文 · 面经 · 独立限时变式</text>
+  <rect x="610" y="174" width="480" height="68" rx="8" fill="#f8f2e9" stroke="#c4a98e"/>
+  <text x="628" y="201" class="name">M01 · M02　核岗位与分组</text>
+  <text x="628" y="225" class="detail">M05 · M06 可同时准备专题小样</text>
+  <path d="M850 242v17" class="edge"/>
+  <rect x="610" y="261" width="480" height="68" rx="8" fill="#f8f2e9" stroke="#c4a98e"/>
+  <text x="628" y="288" class="name">M03　打通一条岗位到练习的链路</text>
+  <text x="628" y="312" class="detail">M07 可先用 SQLite 复跑已知错例</text>
+  <path d="M850 329v17" class="edge"/>
+  <rect x="610" y="348" width="480" height="68" rx="8" fill="#fff3dd" stroke="#ac672d"/>
+  <text x="628" y="375" class="name">早期挑战　能否映射新岗位或明确缺口？</text>
+  <text x="628" y="399" class="detail">系统性漏项 → 回到 M03 改模板</text>
+  <path d="M850 416v17" class="edge"/>
+  <rect x="610" y="435" width="480" height="68" rx="8" fill="#f8f2e9" stroke="#c4a98e"/>
+  <text x="628" y="462" class="name">扩批 M03–M06　按主题补齐</text>
+  <text x="628" y="486" class="detail">M04 补数据工程专题 · M07 按能力补验证</text>
+  <path d="M850 503v17" class="edge"/>
+  <rect x="610" y="522" width="480" height="68" rx="8" fill="#f8f2e9" stroke="#c4a98e"/>
+  <text x="628" y="549" class="name">M08　串起课程、视频和练习</text>
+  <text x="628" y="573" class="detail">每个入口写清要看哪一段、做什么</text>
+  <path d="M850 590v17" class="edge"/>
+  <rect x="610" y="609" width="480" height="68" rx="8" fill="#f8f2e9" stroke="#c4a98e"/>
+  <text x="628" y="636" class="name">M09　独立验收</text>
+  <text x="628" y="660" class="detail">用最终留出岗位和未见练习检查</text>
+  <path d="M1090 382h20v-86h-18" fill="none" stroke="#9c541f" stroke-width="1.6" marker-end="url(#back)"/>
+  <path d="M44 706H1116" stroke="#c7cdd0"/>
+  <text x="44" y="743" class="lane">可以穿插学习</text>
+  <text x="44" y="775" class="detail">计算机基础从乱码、慢查询和恢复问题切入。AI 从历史与模型机制走到工具调用，可靠用模从第一条 SQL 的反例开始。</text>
+</svg>
